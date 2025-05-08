@@ -54,7 +54,7 @@ String _dartEnumDartMappableTemplate(
   final jsonParam = unknownEnumValue || enumsToJson;
 
   final values =
-      '${enumClass.items.mapIndexed((i, e) => _enumValueDartMappable(i, enumClass.type, e, jsonParam: jsonParam)).join(',\n')}${unknownEnumValue ? ',' : ';'}';
+      '${enumClass.items.mapIndexed((i, e) => _enumValueDartMappable(i, enumClass.type, e, jsonParam: jsonParam)).join(',\n')};';
 
   return '''
 ${generatedFileComment(markFileAsGenerated: markFileAsGenerated)}${dartImportDtoTemplate(JsonSerializer.dartMappable)}
@@ -64,6 +64,8 @@ part '${enumClass.name.toSnake}.mapper.dart';
 ${descriptionComment(enumClass.description)}@MappableEnum()
 enum $className {
 $values
+
+  dynamic toJson() => toValue();
 }
 ''';
 }

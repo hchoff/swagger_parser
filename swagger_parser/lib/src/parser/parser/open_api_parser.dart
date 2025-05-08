@@ -711,7 +711,7 @@ class OpenApiParser {
           additionalName: additionalName,
           isRequired: (_apiInfo.schemaVersion == OAS.v2 && !config.useXNullable)
               ? isRequired
-              : isRequired || !isNullable,
+              : isRequired,
         );
 
         var validation = propertyValue;
@@ -776,6 +776,7 @@ class OpenApiParser {
       entities =
           _definitionFileContent[_definitionsConst] as Map<String, dynamic>;
     }
+
     entities.forEach((key, value) {
       if (_skipDataClasses.contains(key)) {
         return;
@@ -822,6 +823,7 @@ class OpenApiParser {
         return;
       } else if (value.containsKey(_typeConst) ||
           value.containsKey(_refConst)) {
+
         final typeWithImport = _findType(
           value,
           name: key,
@@ -832,6 +834,7 @@ class OpenApiParser {
         if (typeWithImport.import != null) {
           imports.add(typeWithImport.import!);
         }
+
         dataClasses.add(
           UniversalComponentClass(
             name: key,
@@ -1154,6 +1157,7 @@ class OpenApiParser {
           ),
         );
       }
+
 
       return (
         type: UniversalType(
